@@ -1,30 +1,27 @@
-import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
-
 import { AuthService } from '../auth/auth.service';
 
 @UntilDestroy({ checkProperties: true })
 @Component({
   standalone: true,
-  imports: [RouterModule, NgIf],
-  selector: 'app-component',
-  templateUrl: './app.component.html',
+  imports: [RouterModule],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class DashboardComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
-  isUser: boolean;
+  isUser!: boolean;
 
   ngOnInit(): void {
-    this.authService.isUser$.subscribe((u) => (this.isUser = u));
-  }
-
-  onLogout() {
-    this.authService.logout().subscribe((res) => {
-      this.router.navigate(['/login']);
+    //todo: check local storage for userName and display in template
+    this.authService.isUser$.subscribe((user) => {
+      if (!user) {
+        this.router.navigate(['/login']);
+      }
     });
   }
 }

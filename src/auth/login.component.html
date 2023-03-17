@@ -1,0 +1,58 @@
+<div class="mx-auto d-block text-center" id="container">
+  <h2><u>Login</u></h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="form-group">
+      <label>Email:</label>
+      <input class="form-control" formControlName="email" />
+    </div>
+    <!--<div
+      *ngIf="
+        loginForm.controls.email.touched && loginForm.controls.email.invalid;
+        else emailErrorPlaceholder
+      "
+      class="bg-danger rounded"
+    >
+      <span *ngIf="loginForm.controls.email.errors?.['required']"
+        >Email is required</span
+      >
+      <span *ngIf="loginForm.controls.email.errors?.['email']"
+        >Email is not valid</span
+      >
+    </div>-->
+    <ng-template #emailErrorPlaceholder>
+      <div class="error-placeholder"></div>
+    </ng-template>
+    <div class="form-group">
+      <label>Password:</label>
+      <input class="form-control" formControlName="password" />
+    </div>
+  <!--  <div
+      *ngIf="
+        loginForm.controls.password.touched &&
+          loginForm.controls.password.invalid;
+        else passErrorPlaceholder
+      "
+      class="bg-danger rounded"
+    >
+      <span *ngIf="loginForm.controls.password?.errors?.['minlength']"
+<span *ngIf="loginForm.controls.password?.errors?.['required']"
+        >Password is required</span
+      >
+        >Enter at least 4 characters</span
+      >
+    </div>-->
+    <ng-template #passErrorPlaceholder>
+      <div class="error-placeholder"></div>
+    </ng-template>
+    <input
+      type="submit"
+      class="btn btn-primary w-50 mt-5"
+      value="Login"
+      [disabled]="loginForm.invalid"
+    />
+  </form>
+
+  <div class="w-100 mx-auto d-block center-text mt-5">
+    <app-timer></app-timer>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="frame mx-auto">
+  <div class="table-responsive">
+    <div *ngIf="stats$ | async" class="mx-auto text-center table">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <div *matHeaderCellDef class="th">Id</div>
+          <div *matCellDef="let stats" class="td">
+            {{ stats.id }}
+          </div>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <div *matHeaderCellDef class="th">Name</div>
+          <div *matCellDef="let stats" class="td">
+            {{ stats.userName }}
+          </div>
+        </ng-container>
+
+        <ng-container matColumnDef="button">
+          <div *matHeaderCellDef class="th">Button type</div>
+          <div *matCellDef="let stats" class="td">
+            {{ stats.buttonType }}
+          </div>
+        </ng-container>
+
+        <ng-container matColumnDef="time">
+          <div *matHeaderCellDef class="th">Time to click(seconds)</div>
+          <div *matCellDef="let stats" class="td">
+            {{ stats.clickedAfterInSeconds }}
+          </div>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <div *matHeaderCellDef class="th"></div>
+          <div *matCellDef="let stats" class="td">
+            <button (click)="onDelete(stats.id)" class="btn btn-danger rounded">
+              Delete
+            </button>
+          </div>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

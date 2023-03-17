@@ -1,0 +1,35 @@
+<div class="frame mx-auto">
+  <h3 class="text-center">User Statistics</h3>
+
+  <form
+    #f="ngForm"
+    (ngSubmit)="onSearch(userName.value)"
+    class="w-50 mx-auto text-center"
+  >
+    <label>Enter a user name:</label>
+    <input
+      [ngModel]="loginName"
+      name="userName"
+      #userName="ngModel"
+      class="form-control"
+      minlength="2"
+      required
+    />
+    <div *ngIf="userName.touched && userName.invalid">
+      <span *ngIf="userName.errors?.['minlength']"
+        >Name should be at least 2 characters</span
+      >
+      <span *ngIf="userName.errors?.['required']">Name is required</span>
+    </div>
+    <br />
+    <input
+      type="submit"
+      value="Search"
+      class="btn btn-primary w-50"
+      [disabled]="f.invalid"
+    />
+  </form>
+
+  <app-user-stats-table></app-user-stats-table>
+  <!--[stats]="userStats$ | async"-->
+</div>
