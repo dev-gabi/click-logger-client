@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { PageStatsResponse } from './models/page-stats-response.model';
 import { UserStatsResponse } from './models/user-stats-response.model';
 
@@ -16,7 +17,7 @@ export class StatsService {
 
   userStats$ = this.userStatsSubject.asObservable();
   pageStats$ = this.pageStatsSubject.asObservable();
-
+//TODO: ADD LessThanFiveMinutesSessions method and component
   getUserStatsByName(userName: string): Observable<UserStatsResponse[]> {
     const stats: UserStatsResponse[] = [
       {
@@ -46,26 +47,10 @@ export class StatsService {
   }
 
   getPageStats(): Observable<PageStatsResponse[]> {
-    const stats: PageStatsResponse[] = [
-      {
-        id: 1,
-        buttonType: 'Login',
-        clickedAfterInSeconds: 13,
-        userName: 'gabi',
-      },
-      {
-        id: 2,
-        buttonType: 'Login',
-        clickedAfterInSeconds: 42,
-        userName: 'gabi',
-      },
-    ];
-    if (!this.pageStatsSubject.value) {
-      this.pageStatsSubject.next(stats);
-      //return this.http.get<UserStatsResponse[]>(`${this.pageStatsBackendUrl}/page`).pipe
-      //(tap(pageStats=>this.pageStatsSubject.next(pageStats)))
-    }
-    return this.pageStats$;
+
+      return this.http.get<PageStatsResponse[]>(environment.urls.stats.getLoginPagestats).pipe
+      (tap(pageStats=>this.pageStatsSubject.next(pageStats)))
+
   }
 
   deletePageStats(id: number): Observable<any> {

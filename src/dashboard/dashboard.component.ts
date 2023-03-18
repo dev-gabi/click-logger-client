@@ -15,10 +15,12 @@ export class DashboardComponent implements OnInit {
   constructor(private authService: AuthService, private router: Router) {}
 
   isUser!: boolean;
+  userName!:string;
 
   ngOnInit(): void {
-    //todo: check local storage for userName and display in template
+
     this.authService.isUser$.subscribe((user) => {
+      this.userName = this.authService.getLoginData().userName;
       if (!user) {
         this.router.navigate(['/login']);
       }
