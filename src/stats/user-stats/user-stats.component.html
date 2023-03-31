@@ -1,35 +1,62 @@
-<div class="frame mx-auto">
+<div class="frame mx-auto" >
   <h3 class="text-center">User Statistics</h3>
 
-  <form
-    #f="ngForm"
-    (ngSubmit)="onSearch(userName.value)"
-    class="w-50 mx-auto text-center"
-  >
-    <label>Enter a user name:</label>
-    <input
-      [ngModel]="loginName"
-      name="userName"
-      #userName="ngModel"
-      class="form-control"
-      minlength="2"
-      required
-    />
-    <div *ngIf="userName.touched && userName.invalid">
-      <span *ngIf="userName.errors?.['minlength']"
-        >Name should be at least 2 characters</span
+  <div class="required">
+      <div class="col-md-12">
+        <form     
+      
+        #f="ngForm"
+        (ngSubmit)="onSearch(userName.value)"
+        class="w-50 mx-auto text-center"
       >
-      <span *ngIf="userName.errors?.['required']">Name is required</span>
-    </div>
-    <br />
-    <input
-      type="submit"
-      value="Search"
-      class="btn btn-primary w-50"
-      [disabled]="f.invalid"
-    />
-  </form>
+        <label>Search a user name:</label>
+  
+          <input
+          [ngModel]="loginName"
+          name="userName"
+          #userName="ngModel"
+         
+          minlength="2"
+          required
+        />
+        <input
+        type="submit"
+        value="Search"
+        class="btn btn-secondary w-25"
+        [disabled]="f.invalid"
+      />
+    
+  
+        <div *ngIf="userName.touched && userName.invalid">
+          <span *ngIf="userName.errors?.['minlength']"
+            >Name should be at least 2 characters</span
+          >
+          <span *ngIf="userName.errors?.['required']">Name is required</span>
+        </div>
+        <br />
+  
+  <br/> 
+  
+      </form>
+      </div>
+      <div class="col-md-12 row text-center">
+        <div class="col-md">
+          <button type="button" class="btn btn-primary w-50" (click)="onGetAll()">Display All</button>
+        </div>
+        <div class="col-md">
+          <button type="button" class="btn btn-primary w-50" (click)="onGetSessionsLowerThanFiveMinutes()">Short sessions</button>
+        </div>
+      </div>
+
+
+
+
+
+  
+  </div>
+
 
   <app-user-stats-table></app-user-stats-table>
-  <!--[stats]="userStats$ | async"-->
 </div>
+
+

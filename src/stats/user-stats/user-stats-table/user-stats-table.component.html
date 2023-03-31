@@ -36,6 +36,13 @@
         </div>
       </ng-container>
 
+      <ng-container matColumnDef="job">
+        <div *matHeaderCellDef class="th">Job title</div>
+        <div *matCellDef="let stats" class="td">
+          {{ stats.jobTitle }}
+        </div>
+      </ng-container>
+
       <ng-container matColumnDef="delete">
         <div *matHeaderCellDef class="th"></div>
         <div *matCellDef="let stats" class="td">

@@ -1,54 +1,51 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, filter, Observable, of, tap } from 'rxjs';
+import { BaseService } from 'src/base.service';
 import { environment } from 'src/environments/environment';
 import { PageStatsResponse } from './models/page-stats-response.model';
 import { UserStatsResponse } from './models/user-stats-response.model';
+import { UserStats } from './models/user-stats.model';
 
 @Injectable({ providedIn: 'root' })
-export class StatsService {
-  pageStatsBackendUrl = 'loginPageStats';
-  userStatsBackendUrl = 'loginUserStats';
+export class StatsService extends BaseService{
 
-  constructor(private http: HttpClient) {}
+
+  constructor(private http: HttpClient) {super();}
 
   pageStatsSubject = new BehaviorSubject<PageStatsResponse[]>(null);
-  userStatsSubject = new BehaviorSubject<UserStatsResponse[]>(null);
+  userStatsSubject = new BehaviorSubject<UserStats[]>(null);
 
   userStats$ = this.userStatsSubject.asObservable();
   pageStats$ = this.pageStatsSubject.asObservable();
-//TODO: ADD LessThanFiveMinutesSessions method and component
-  getUserStatsByName(userName: string): Observable<UserStatsResponse[]> {
-    const stats: UserStatsResponse[] = [
-      {
-        id: 1,
-        userId: 1,
-        userName: 'gabi',
-        sessionInMinutes: 10,
-        loginTime: new Date('2023-03-06T03:24:00'),
-        logoutTime: new Date('2023-03-06T03:34:00'),
-      },
-      {
-        id: 2,
-        userId: 1,
-        userName: 'gabi',
-        sessionInMinutes: 16,
-        loginTime: new Date('2023-03-07T15:04:00'),
-        logoutTime: null,
-      },
-    ];
+//TODO: delete methods
 
-    if (!this.userStatsSubject.value) {
-      this.userStatsSubject.next(stats);
-      //return this.http.post<UserStatsResponse[]>(`${this.userStatsBackendUrl}/getOne`, userName).pipe
-      //(tap(userStats=>this.userStatsSubject.next(userStats)))
-    }
-    return this.userStats$;
+  getAllUserStats(): Observable<UserStatsResponse>{
+
+          return this.http.get<UserStatsResponse>(environment.urls.stats.userStats).pipe(
+           
+            tap(res=>this.userStatsSubject.next(res.stats)),
+            catchError(this.handleHttpError)
+          )
+  }
+  getUserStatsByName(userName: string): Observable<UserStatsResponse> {
+
+      return this.http.post<UserStatsResponse>(environment.urls.stats.getLoginUserStatsByName, {name:userName}).pipe
+      (tap(res=>this.userStatsSubject.next(res.stats)),
+      catchError(this.handleHttpError)
+      )
+  }
+  
+  getSessionsLowerThanFive(){
+    return this.http.get<UserStatsResponse>(environment.urls.stats.getSessionsLowerThanFive).pipe
+    (tap(res=>this.userStatsSubject.next(res.stats)),
+    catchError(this.handleHttpError)
+    )
   }
 
   getPageStats(): Observable<PageStatsResponse[]> {
 
-      return this.http.get<PageStatsResponse[]>(environment.urls.stats.getLoginPagestats).pipe
+      return this.http.get<PageStatsResponse[]>(environment.urls.stats.getLoginPageStats).pipe
       (tap(pageStats=>this.pageStatsSubject.next(pageStats)))
 
   }
@@ -70,18 +67,23 @@ export class StatsService {
   }
 
   deleteUserStats(id: number): Observable<any> {
-    // return this.http.delete(`${this.userStatsBackendUrl}/loginUserStats/${id}`).pipe(
-    //tap(()=>{
-    //let stats = this.userStatsSubject.value.slice();
-    //const index = stats.indexOf(s=>s.id==id);
-    //stats.splice(index, 1);
-    //this.userStatsSubject.next(stats);
-    //})
-    // );
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        id: id
+      },
+    };
+    
+    return this.http.delete(environment.urls.stats.userStats, options).pipe(
+    tap(()=>{
     let stats = this.userStatsSubject.value.slice();
-    const index = stats.findIndex((s) => s.id == id);
+    const index = stats.findIndex(s=>s.id==id);
     stats.splice(index, 1);
     this.userStatsSubject.next(stats);
-    return of();
+    })
+    );
+
   }
 }

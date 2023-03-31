@@ -5,20 +5,20 @@
       <label>Email:</label>
       <input class="form-control" formControlName="email" />
     </div>
-    <!--<div
+    <div
       *ngIf="
-        loginForm.controls.email.touched && loginForm.controls.email.invalid;
+        loginForm.get('email').touched && loginForm.get('email').invalid;
         else emailErrorPlaceholder
       "
       class="bg-danger rounded"
     >
-      <span *ngIf="loginForm.controls.email.errors?.['required']"
+      <span *ngIf="loginForm.get('email').hasError('required')"
         >Email is required</span
       >
-      <span *ngIf="loginForm.controls.email.errors?.['email']"
+      <span *ngIf="loginForm.get('email').hasError('email')"
         >Email is not valid</span
       >
-    </div>-->
+    </div>
     <ng-template #emailErrorPlaceholder>
       <div class="error-placeholder"></div>
     </ng-template>
@@ -26,21 +26,22 @@
       <label>Password:</label>
       <input type="password" class="form-control" formControlName="password" />
     </div>
-  <!--  <div
+    <div
       *ngIf="
-        loginForm.controls.password.touched &&
-          loginForm.controls.password.invalid;
+        loginForm.get('password').touched &&
+        loginForm.get('password').invalid;
         else passErrorPlaceholder
       "
       class="bg-danger rounded"
     >
-      <span *ngIf="loginForm.controls.password?.errors?.['minlength']"
-<span *ngIf="loginForm.controls.password?.errors?.['required']"
+      <span *ngIf=" loginForm.get('password').errors?.['minlength']">
+        Enter at least 4 characters       
+      </span>
+<span *ngIf="loginForm.get('password').errors?.['required']"
         >Password is required</span
       >
-        >Enter at least 4 characters</span
-      >
-    </div>-->
+ 
+    </div>
     <ng-template #passErrorPlaceholder>
       <div class="error-placeholder"></div>
     </ng-template>

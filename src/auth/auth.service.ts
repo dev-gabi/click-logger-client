@@ -1,18 +1,17 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Token } from '@angular/compiler';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject, tap, catchError, throwError } from 'rxjs';
+import { Observable,  BehaviorSubject, tap, catchError } from 'rxjs';
+import { BaseService } from 'src/base.service';
 import { environment } from 'src/environments/environment';
-import { ApiResponse } from './models/api-response.model';
 import { LoginRequest } from './models/login-request.model';
 import { LoginResponse } from './models/login-response.model';
 import { User } from './models/user.model';
 
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthService extends BaseService{
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {super();}
 //TODO: auto login 
   private localStorageSessionKey = '_sk';
   private isUser = new BehaviorSubject<boolean>(false);
@@ -49,36 +48,7 @@ export class AuthService {
     return data;
   }
   
-  protected handleHttpError = (response: HttpErrorResponse) =>
-  {
 
-    let error: string = "";
-    if (response.status == 0) {
-      error = "A Network Error Has Occured, please notify the site's webmaster";
-    }
-
-    else if (response.error?.errors) {
-
-      if (response.error.errors?.Email) {
-        response.error.errors.Email.map((er: string) => error += " " + er + " .");
-      }
-      if (response.error.errors?.Password) {
-        response.error.errors.Password.map((er: string) => error += " " + er );
-      }
-
-      if (Array.isArray(response.error?.errors)) {
-        response.error.errors.map((er: string) => error += " " + er + " .");
-      } 
-    }
-    else if (response.error?.detail) {
-      error += response.error?.detail;
-    }
-    else {
-      error = response.message;
-    }
-
-    return throwError(()=>new Error(error));
-  }
   setUsertoLocalStorage(res: LoginResponse) {
 
     const user : User = {

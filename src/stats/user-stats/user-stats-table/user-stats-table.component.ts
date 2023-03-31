@@ -2,6 +2,7 @@ import { AsyncPipe, DatePipe, NgFor, NgIf } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -10,6 +11,7 @@ import { UserStatsResponse } from '../../models/user-stats-response.model';
 import { StatsService } from '../../stats.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
+import { UserStats } from 'src/stats/models/user-stats.model';
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -20,18 +22,18 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStatsTableComponent implements OnInit {
-  userStats$!: Observable<UserStatsResponse[]>;
-  constructor(private statsService: StatsService) {}
-  displayedColumns = ['id', 'name', 'session', 'login', 'logout', 'delete'];
+  userStats$!: Observable<UserStats[]>;
+  constructor(private statsService: StatsService, private cdr:ChangeDetectorRef) {}
+  displayedColumns = ['id', 'name', 'session', 'login', 'logout', 'job','delete'];
 
 
-  dataSource!: MatTableDataSource<UserStatsResponse>;
+  dataSource!: MatTableDataSource<UserStats>;
   ngOnInit() {
     this.userStats$ = this.statsService.userStats$;
 
     this.userStats$.subscribe((stats) => {
-     // console.log(stats);
       this.dataSource = new MatTableDataSource(stats);
+      this.cdr.detectChanges();
     });
   }
 
