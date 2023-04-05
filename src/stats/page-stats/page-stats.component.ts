@@ -22,6 +22,7 @@ export class PageStatsComponent implements OnInit {
   dataSource!: MatTableDataSource<PageStatsResponse>;
 
   ngOnInit() {
+    //todo: state managment - each page route send a new get request
     this.statsService.getPageStats().subscribe();
     this.stats$ = this.statsService.pageStats$;
 

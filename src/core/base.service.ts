@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { throwError } from "rxjs";
 
 export class BaseService{
@@ -32,5 +32,16 @@ export class BaseService{
       }
   
       return throwError(()=>new Error(error));
+    }
+
+    getDeleteHttpHeadersOptions(id:number){
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+        }),
+        body: {
+          id: id
+        },
+      };
     }
 }

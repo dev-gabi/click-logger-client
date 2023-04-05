@@ -4,14 +4,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  Input,
   OnInit,
 } from '@angular/core';
-import { UserStatsResponse } from '../../models/user-stats-response.model';
+
 import { StatsService } from '../../stats.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-import { UserStats } from 'src/stats/models/user-stats.model';
+import { UserStatsResponse } from 'src/stats/models/user-stats-response.model';
+
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -22,12 +22,12 @@ import { UserStats } from 'src/stats/models/user-stats.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserStatsTableComponent implements OnInit {
-  userStats$!: Observable<UserStats[]>;
+  userStats$!: Observable<UserStatsResponse[]>;
   constructor(private statsService: StatsService, private cdr:ChangeDetectorRef) {}
   displayedColumns = ['id', 'name', 'session', 'login', 'logout', 'job','delete'];
 
 
-  dataSource!: MatTableDataSource<UserStats>;
+  dataSource!: MatTableDataSource<UserStatsResponse>;
   ngOnInit() {
     this.userStats$ = this.statsService.userStats$;
 

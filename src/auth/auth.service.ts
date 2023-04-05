@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,  BehaviorSubject, tap, catchError } from 'rxjs';
-import { BaseService } from 'src/base.service';
+import { BaseService } from 'src/core/base.service';
 import { environment } from 'src/environments/environment';
 import { LoginRequest } from './models/login-request.model';
 import { LoginResponse } from './models/login-response.model';

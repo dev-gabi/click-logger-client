@@ -7,10 +7,11 @@ export const environment ={
             "logout":"http://localhost:39154/api/auth/logout"
         },
         "stats":{
-            "getLoginPageStats":"http://localhost:39154/api/loginPageStats",
+            "loginPageStats":"http://localhost:39154/api/loginPageStats",
             "getLoginUserStatsByName":"http://localhost:39154/api/loginUserStats/name",
             "userStats":"http://localhost:39154/api/LoginUserStats",
-            "getSessionsLowerThanFive":"http://localhost:39154/api/loginUserStats/SessionsLowerThanFive"
+            "getSessionsLowerThanFive":"http://localhost:39154/api/loginUserStats/SessionsLowerThanFive",
+  
         }
 
     }
