@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { LoginRequest } from './models/login-request.model';
 import { LoginResponse } from './models/login-response.model';
 import { User } from './models/user.model';
+import { Endpoints } from 'src/core/endpoints';
 
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +20,7 @@ export class AuthService extends BaseService{
 
   login(request: LoginRequest): Observable<LoginResponse> {
     
-     return this.http.post<LoginResponse>(environment.urls.auth.login, request).pipe(
+     return this.http.post<LoginResponse>(Endpoints.urls.auth.login, request).pipe(
       tap(res=>{
         this.isUser.next(true);
         this.setUsertoLocalStorage(res);
@@ -31,7 +32,7 @@ export class AuthService extends BaseService{
 
   logout() {
 
-    return this.http.post(environment.urls.auth.logout, null).pipe(
+    return this.http.post(Endpoints.urls.auth.logout, null).pipe(
       tap(()=>{
         this.isUser.next(false);
         localStorage.removeItem(this.localStorageSessionKey);

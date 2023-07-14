@@ -20,10 +20,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
 
     this.authService.isUser$.subscribe((user) => {
-      this.userName = this.authService.getLoginData().userName;
-      if (!user) {
-        this.router.navigate(['/login']);
-      }
+        this.userName = this.authService.getLoginData()?.userName;
+        if (!user) {
+          this.router.navigate(['/login']);
+        }
     });
   }
 }

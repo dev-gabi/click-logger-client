@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { LoginRequest } from './models/login-request.model';
 import { AuthService } from './auth.service';
 import { TimerComponent } from './timer/timer.component';
+import { environment } from 'src/environments/environment';
 @Component({
   standalone: true,
   imports: [ReactiveFormsModule, NgIf, TimerComponent],
@@ -39,8 +40,8 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(4)]],
     });
     this.loginForm.setValue({
-      email:'user@example.com',
-      password:'string'
+      email:environment.email,
+      password:environment.password
     })
   }
   onLogin() {

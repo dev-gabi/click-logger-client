@@ -11,6 +11,7 @@ import { SubjectNamesEnum } from 'src/core/subjet-names.enum';
 import { removeObjectFromArray } from 'src/core/utils';
 import { UserStatsArrayResponse } from './models/user-stats-array-response.model';
 import { UserStatsResponse } from './models/user-stats-response.model';
+import { Endpoints } from 'src/core/endpoints';
 
 
 @Injectable({ providedIn: 'root' })
@@ -28,7 +29,7 @@ export class StatsService extends BaseService{
 
   getAllUserStats(): Observable<UserStatsArrayResponse>{
 
-          return this.http.get<UserStatsArrayResponse>(environment.urls.stats.userStats).pipe(
+          return this.http.get<UserStatsArrayResponse>(Endpoints.urls.stats.userStats).pipe(
            
             tap(res=>this.userStatsSubject.next(res.stats)),
             catchError(this.handleHttpError)
@@ -36,14 +37,14 @@ export class StatsService extends BaseService{
   }
   getUserStatsByName(userName: string): Observable<UserStatsArrayResponse> {
 
-      return this.http.post<UserStatsArrayResponse>(environment.urls.stats.getLoginUserStatsByName, {name:userName}).pipe
+      return this.http.post<UserStatsArrayResponse>(Endpoints.urls.stats.getLoginUserStatsByName, {name:userName}).pipe
       (tap(res=>this.userStatsSubject.next(res.stats)),
       catchError(this.handleHttpError)
       )
   }
   
   getSessionsLowerThanFive(){
-    return this.http.get<UserStatsArrayResponse>(environment.urls.stats.getSessionsLowerThanFive).pipe
+    return this.http.get<UserStatsArrayResponse>(Endpoints.urls.stats.getSessionsLowerThanFive).pipe
     (tap(res=>this.userStatsSubject.next(res.stats)),
     catchError(this.handleHttpError)
     )
@@ -51,7 +52,7 @@ export class StatsService extends BaseService{
 
   getPageStats(): Observable<PageStatsResponse[]> {
 
-      return this.http.get<PageStatsResponse[]>(environment.urls.stats.loginPageStats).pipe(
+      return this.http.get<PageStatsResponse[]>(Endpoints.urls.stats.loginPageStats).pipe(
         catchError(this.handleHttpError),
         tap(pageStats=>this.pageStatsSubject.next(pageStats)))
 
@@ -60,7 +61,7 @@ export class StatsService extends BaseService{
   deletePageStats(id: number): Observable<any> {
     const options = this.getDeleteHttpHeadersOptions(id);
 
-    return this.http.delete<DeleteResponse>(`${environment.urls.stats.loginPageStats}`, options).pipe(
+    return this.http.delete<DeleteResponse>(`${Endpoints.urls.stats.loginPageStats}`, options).pipe(
       catchError(this.handleHttpError),
       tap(()=>this.deleteObjectFromSubject(id, SubjectNamesEnum.page)));
   }
@@ -68,7 +69,7 @@ export class StatsService extends BaseService{
   deleteUserStats(id: number): Observable<any> {
     const options = this.getDeleteHttpHeadersOptions(id);
     
-    return this.http.delete<DeleteResponse>(environment.urls.stats.userStats, options).pipe(
+    return this.http.delete<DeleteResponse>(Endpoints.urls.stats.userStats, options).pipe(
       catchError(this.handleHttpError),
       tap(()=>this.deleteObjectFromSubject(id, SubjectNamesEnum.user)));
   }
