@@ -1,1 +1,18 @@
-<p>top-nav works!</p>
+<nav class="text-center">
+  <ng-container *ngIf="(isUser$ | async) == true">
+    <button  class="btn btn-danger" (click)="(onLogout())" id="logout-btn">
+      Logout
+    </button>
+    <a routerLink="/dash" routerLinkActive="nav-active">
+      Dashboard
+    </a>
+  </ng-container>
+
+    <a routerLink="/about" routerLinkActive="nav-active">
+      About
+    </a>
+
+    <a *ngIf="(isUser$ | async) == false" routerLink="/login"  routerLinkActive="nav-active">
+      Login
+    </a>
+  </nav>
