@@ -5,13 +5,14 @@ import {  provideHttpClient, withInterceptors } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './routes';
 import { AppComponent } from './app/app.component';
-import { authInterceptorFn } from './auth/auth-interceptor.function';
+import { authInterceptorFn } from './pages/auth/auth-interceptor.function';
+
 
 
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(withInterceptors([authInterceptorFn])),
-    importProvidersFrom(RouterModule.forRoot(routes)),
+    importProvidersFrom(RouterModule.forRoot(routes))
   ],
 });

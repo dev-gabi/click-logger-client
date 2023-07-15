@@ -2,8 +2,8 @@ import { NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { AuthService } from 'src/pages/auth/auth.service';
 
-import { AuthService } from '../auth/auth.service';
 
 @UntilDestroy({ checkProperties: true })
 @Component({

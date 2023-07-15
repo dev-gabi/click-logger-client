@@ -30,7 +30,7 @@ export class BaseService{
       else {
         error = response.message;
       }
-  
+  console.log(error)
       return throwError(()=>new Error(error));
     }
 

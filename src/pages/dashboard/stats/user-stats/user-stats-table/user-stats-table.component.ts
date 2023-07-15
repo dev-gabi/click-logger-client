@@ -10,7 +10,8 @@ import {
 import { StatsService } from '../../stats.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Observable } from 'rxjs';
-import { UserStatsResponse } from 'src/stats/models/user-stats-response.model';
+import { UserStatsResponse } from '../../models/user-stats-response.model';
+
 
 
 @UntilDestroy({ checkProperties: true })

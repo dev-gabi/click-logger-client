@@ -1,4 +1,4 @@
-<div class="mx-auto d-block text-center" id="container">
+<div class="mx-auto d-block text-center box-shadow" id="container">
   <h2><u>Login</u></h2>
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <div class="form-group">
@@ -37,20 +37,27 @@
       <span *ngIf=" loginForm.get('password').errors?.['minlength']">
         Enter at least 4 characters       
       </span>
-<span *ngIf="loginForm.get('password').errors?.['required']"
-        >Password is required</span
-      >
+    <span *ngIf="loginForm.get('password').errors?.['required']"
+            >Password is required</span
+          >
  
     </div>
     <ng-template #passErrorPlaceholder>
       <div class="error-placeholder"></div>
     </ng-template>
-    <input
-      type="submit"
-      class="btn btn-primary w-50 mt-5"
-      value="Login"
-      [disabled]="loginForm.invalid"
-    />
+
+    <div class="form-group">
+      <label><b>Credentials are good - just click</b></label><br/>
+      <span class="fs-50">&#8681;</span>
+
+      <input
+        type="submit"
+        class="btn btn-primary fs-4 form-control"
+        value="Login"
+        [disabled]="loginForm.invalid"
+      />
+    </div>
+
   </form>
 
   <div class="w-100 mx-auto d-block center-text mt-5">

@@ -1,7 +1,13 @@
-<nav>
+<nav class="text-center">
   <button *ngIf="isUser" class="btn btn-danger" (click)="(onLogout())">
     Logout
   </button>
+  <a routerLink="/about" routerLinkActive="nav-active">
+    About
+  </a>
+  <a routerLink="/login" routerLinkActive="nav-active">
+    Login
+  </a>
 </nav>
 
 <router-outlet></router-outlet>

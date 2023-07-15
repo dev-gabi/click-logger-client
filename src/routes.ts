@@ -9,36 +9,41 @@ export const routes: Routes = [
   {
     path: 'dash',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
+      import('./pages/dashboard/dashboard.component').then(
         (d) => d.DashboardComponent
       ),
   },
   {
     path: 'login',
     loadComponent: () =>
-      import('./auth/login.component').then((l) => l.LoginComponent),
+      import('./pages/auth/login.component').then((l) => l.LoginComponent),
   },
   {
     path: 'stats',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
+      import('./pages/dashboard/dashboard.component').then(
         (d) => d.DashboardComponent
       ),
     children: [
-      {
-        path: 'page',
-        loadComponent: () =>
-          import('./stats/page-stats/page-stats.component').then(
-            (s) => s.PageStatsComponent
-          ),
-      },
-      {
-        path: 'user',
-        loadComponent: () =>
-          import('./stats/user-stats/user-stats.component').then(
-            (s) => s.UserStatsComponent
-          ),
-      },
+              {
+                path: 'page',
+                loadComponent: () =>
+                  import('./pages/dashboard/stats/page-stats/page-stats.component').then(
+                    (s) => s.PageStatsComponent
+                  ),
+              },
+              {
+                path: 'user',
+                loadComponent: () =>
+                  import('./pages/dashboard/stats/user-stats/user-stats.component').then(
+                    (s) => s.UserStatsComponent
+                  ),
+              },
     ],
+  },
+  {
+    path: 'about',
+    loadComponent: () =>
+      import('./pages/about/about.component').then((a) => a.AboutComponent),
   },
 ];

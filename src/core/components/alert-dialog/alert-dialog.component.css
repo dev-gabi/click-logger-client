@@ -1,0 +1,11 @@
+
+.alert-container{
+    position: fixed;
+    top:30% ;
+    left:30% ;
+    width:40% ;
+    border:3px solid black;
+    border-radius: 10px;
+    background-color: rgb(230, 122, 122);
+    padding: 10px;
+}

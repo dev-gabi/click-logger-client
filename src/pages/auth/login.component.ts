@@ -6,14 +6,18 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
+import { MatDialog, MatDialogModule  } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { LoginRequest } from './models/login-request.model';
 import { AuthService } from './auth.service';
 import { TimerComponent } from './timer/timer.component';
 import { environment } from 'src/environments/environment';
+import { AlertDialogComponent } from 'src/core/components/alert-dialog/alert-dialog.component';
+
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, TimerComponent],
+  imports: [ReactiveFormsModule, NgIf, TimerComponent, AlertDialogComponent, MatDialogModule, MatIconModule],
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
@@ -24,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public errorDialog:MatDialog
   ) {}
   loginForm!: FormGroup;
   startTimeOnPage!: number;
@@ -58,7 +63,7 @@ export class LoginComponent implements OnInit {
                     this.loginForm.reset();
                     this.router.navigate(['/dash']);
                   }},
-      error: (e) => alert(e),
+      error: (e) => this.openErrorDialog(e),
 
       }
   );}
@@ -68,5 +73,12 @@ export class LoginComponent implements OnInit {
     var seconds = Math.floor(millis / 1000);
 
     return seconds;
+  }
+
+  openErrorDialog(error:string){
+    this.errorDialog.open(AlertDialogComponent, {
+      data:error
+  });
+   
   }
 }

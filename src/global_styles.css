@@ -7,23 +7,31 @@ body {
   background-repeat: no-repeat;
   background-position: top left;
 }
-
-a,
-a:visited {
+a{
   padding: 5px;
   margin: 5px;
-  background-color: white;
   font-weight: bold;
   border-radius: 5px;
-  border: 1px solid black;
   transition: 1s;
+}
+
+a:not(.a-dark),
+a:visited:not(.a-dark)
+{
+  background-color: white;
+  border: 1px solid black;
   color: black;
 }
-a:hover,
-a.active {
+a:hover:not(.a-dark),
+a.active:not(.a-dark),
+.a-dark, .a-dark:visited {
   color: white;
   background-color: black;
   border: 1px solid white;
+}
+.a-dark:active, .a-dark:hover{
+  color: white;
+  background-color: rgb(56, 56, 56);
 }
 .frame {
   background-color: white;
@@ -48,4 +56,13 @@ a.active {
 }
 .tr {
   margin-bottom: 20px;
+}
+.box-shadow{
+  box-shadow: 5px 5px 10px black;
+}
+.nav-active{
+outline: 3px solid rgba(109, 196, 207, 0.986);
+}
+.fs-50{
+  font-size: 50px;
 }
